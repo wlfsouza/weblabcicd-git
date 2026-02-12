@@ -62,7 +62,10 @@ jobs:
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
+                # O caminho do arquivo
           file: ./weblabcicegit/weblabcicegit/Dockerfile
+                # IMPORTANTE: Define a pasta do projeto como raiz do build
+          context: ./weblabcicegit/weblabcicegit
 
   deploy:
     permissions:
