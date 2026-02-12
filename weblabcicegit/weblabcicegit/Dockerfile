@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copia o arquivo .csproj para restaurar dependências
+# Copia o arquivo .csproj (mesma pasta do Dockerfile)
 COPY ["weblabcicegit.csproj", "./"]
 RUN dotnet restore "./weblabcicegit.csproj"
 
