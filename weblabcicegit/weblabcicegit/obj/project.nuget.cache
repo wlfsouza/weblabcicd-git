@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "QvrMe2GEcC0=",
+  "success": true,
+  "projectFilePath": "E:\\weblabcicd-git\\weblabcicegit\\weblabcicegit\\weblabcicegit.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Wagner Souza\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.23.0\\microsoft.visualstudio.azure.containers.tools.targets.1.23.0.nupkg.sha512"
+  ],
+  "logs": []
+}
