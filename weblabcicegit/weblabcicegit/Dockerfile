@@ -1,29 +1,30 @@
-# Imagem base para execução
+# Imagem base
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
+# Garante que a app escute na porta 8080
+ENV ASPNETCORE_URLS=http://+:8080
 
-# Imagem para build
+# Imagem de build
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copia o arquivo .csproj (mesma pasta do Dockerfile)
-COPY ["weblabcicegit/weblabcicegit.csproj", ".weblabcicegit"]
+# Como vamos mudar o contexto no GitHub Action, podemos copiar direto
+COPY ["weblabcicegit.csproj", "."]
 RUN dotnet restore "./weblabcicegit.csproj"
 
-# Copia todo o código
+# Copia todo o resto
 COPY . .
 WORKDIR "/src"
 RUN dotnet build "weblabcicegit.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Publica o projeto
+# Publica
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "weblabcicegit.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Imagem final
+# Final
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
