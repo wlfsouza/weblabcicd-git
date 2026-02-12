@@ -1,25 +1,37 @@
-# Estágio de Build
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+# ------------------------------------------------------------------
+# ESTÁGIO 1: Build (Usando SDK do .NET 9)
+# ------------------------------------------------------------------
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copia tudo para não ter erro de arquivo faltando
+# Copia todos os arquivos da raiz do repositório
 COPY . .
 
-# Restaura dependências (Isso já funcionou no seu último teste)
+# Restaura as dependências
+# (O caminho completo que já validamos que funciona)
 RUN dotnet restore "weblabcicegit/weblabcicegit/weblabcicegit.csproj"
 
-# Compila (Aqui é onde estava dando erro por causa da versão)
+# Compila o projeto
 RUN dotnet build "weblabcicegit/weblabcicegit/weblabcicegit.csproj" -c Release -o /app/build
 
-# Publica
+# ------------------------------------------------------------------
+# ESTÁGIO 2: Publicação
+# ------------------------------------------------------------------
 FROM build AS publish
 RUN dotnet publish "weblabcicegit/weblabcicegit/weblabcicegit.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# Estágio Final (Execução)
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+# ------------------------------------------------------------------
+# ESTÁGIO 3: Final / Runtime (Usando Runtime do .NET 9)
+# ------------------------------------------------------------------
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
-EXPOSE 8080
-ENV ASPNETCORE_URLS=http://+:8080
 
+# Configura a porta para 8080 (Padrão do .NET 9)
+ENV ASPNETCORE_HTTP_PORTS=8080
+EXPOSE 8080
+
+# Copia os arquivos publicados
 COPY --from=publish /app/publish .
+
+# Define o ponto de entrada
 ENTRYPOINT ["dotnet", "weblabcicegit.dll"]
