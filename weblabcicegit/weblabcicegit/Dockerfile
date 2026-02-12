@@ -10,7 +10,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copia o arquivo .csproj (mesma pasta do Dockerfile)
-COPY ["weblabcicegit/weblabcicegit/weblabcicegit.csproj", ".weblabcicegit"]
+COPY ["weblabcicegit/weblabcicegit.csproj", ".weblabcicegit"]
 RUN dotnet restore "./weblabcicegit.csproj"
 
 # Copia todo o código
