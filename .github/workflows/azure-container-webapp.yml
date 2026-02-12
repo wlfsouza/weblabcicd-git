@@ -62,9 +62,10 @@ jobs:
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-                # Aponta para onde o Dockerfile está fisicamente
+          # O caminho para o arquivo Dockerfile
           file: ./weblabcicegit/weblabcicegit/Dockerfile
-                # NÃO adicione a linha 'context' aqui, deixe o padrão (que é a raiz)
+          # NOVA LINHA IMPORTANTE: Define a pasta de trabalho do Docker
+          context: ./weblabcicegit/weblabcicegit
 
   deploy:
     permissions:
