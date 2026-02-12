@@ -10,14 +10,12 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copia o arquivo .csproj para restaurar dependências
-COPY ["weblabcicegit/weblabcicegit.csproj", "weblabcicegit/"]
-RUN dotnet restore "weblabcicegit/weblabcicegit.csproj"
+COPY ["weblabcicegit.csproj", "./"]
+RUN dotnet restore "./weblabcicegit.csproj"
 
 # Copia todo o código
 COPY . .
-WORKDIR "/src/weblabcicegit"
-
-# Compila o projeto
+WORKDIR "/src"
 RUN dotnet build "weblabcicegit.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Publica o projeto
