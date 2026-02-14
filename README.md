@@ -2,8 +2,7 @@ Lab para simular a implantação de um site simples no Azure APP usando o GitHub
 
 ## Configuração do GitHub Actions
 
-O arquivo de configuração do GitHub Actions está localizado em:
-`.github/workflows/azure-container-webapp.yml`
+O arquivo de configuração do GitHub Actions está localizado em: **`.github/workflows/azure-container-webapp.yml`**
 
 Este arquivo contém o workflow que:
 - Constrói uma imagem Docker da aplicação
